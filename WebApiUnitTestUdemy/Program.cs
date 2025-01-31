@@ -1,4 +1,3 @@
-using GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using WebApiUnitTestUdemy.DataContext;
 using WebApiUnitTestUdemy.Repositories.Abstract;
@@ -9,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
-
+builder.Services.AddScoped<IProductRepositoy,ProductRepository>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
