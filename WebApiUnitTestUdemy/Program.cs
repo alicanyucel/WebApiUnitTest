@@ -1,9 +1,16 @@
+using GenericRepository;
+using Microsoft.EntityFrameworkCore;
+using WebApiUnitTestUdemy.DataContext;
+using WebApiUnitTestUdemy.Repositories.Abstract;
+using WebApiUnitTestUdemy.Repositories.Concrete;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
