@@ -1,6 +1,0 @@
-@WebApiUnitTestUdemy_HostAddress = http://localhost:5230
-
-GET {{WebApiUnitTestUdemy_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
