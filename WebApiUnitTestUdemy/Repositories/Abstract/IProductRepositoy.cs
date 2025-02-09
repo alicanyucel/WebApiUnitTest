@@ -1,4 +1,4 @@
-﻿using WebApiUnitTestUdemy.Models;
+﻿
 
 namespace WebApiUnitTestUdemy.Repositories.Abstract
 {
