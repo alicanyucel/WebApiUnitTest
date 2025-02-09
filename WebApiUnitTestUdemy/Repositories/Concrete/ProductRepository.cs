@@ -1,58 +1,46 @@
-﻿namespace WebApiUnitTestUdemy.Repositories.Concrete
+﻿
+using Microsoft.EntityFrameworkCore;
+using WebApiUnitTestUdemy.DataContext;
+using WebApiUnitTestUdemy.Repositories.Abstract;
+
+namespace WebApiUnitTestUdemy.Repositories.Concrete
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using WebApiUnitTestUdemy.Models;
-    using WebApiUnitTestUdemy.Repositories.Abstract;
-
-    public class ProductRepository : IProductRepositoy
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        private List<Product> _products;
+        private readonly ApplicationDbContext _context;
+        private readonly DbSet<TEntity> _dbset;
 
-        public ProductRepository()
+        public Repository(ApplicationDbContext context)
         {
-            // product ekle
-            _products = new List<Product>
+            _context = context;
+            _dbset = _context.Set<TEntity>();
+        }
+        public async Task Create(TEntity entity)
         {
-            new Product { Id = 1, Name = "Product 1", Price = 10.99m },
-            new Product { Id = 2, Name = "Product 2", Price = 20.99m },
-            new Product { Id = 3, Name = "Product 3", Price = 30.99m }
-        };
+            await _dbset.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+        public void Delete(TEntity entity)
+        {
+            _dbset.Remove(entity);
+            _context.SaveChanges();
         }
 
-        public IEnumerable<Product> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _products;
+            return await _dbset.ToListAsync();
         }
 
-        public Product GetById(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            return _products.FirstOrDefault(p => p.Id == id);
+            return await _dbset.FindAsync(id);
         }
 
-        public void Add(Product product)
+        public void Update(TEntity entity)
         {
-            _products.Add(product);
-        }
-
-        public void Update(Product product)
-        {
-            var existingProduct = GetById(product.Id);
-            if (existingProduct != null)
-            {
-                existingProduct.Name = product.Name;
-                existingProduct.Price = product.Price;
-            }
-        }
-
-        public void Delete(int id)
-        {
-            var product = GetById(id);
-            if (product != null)
-            {
-                _products.Remove(product);
-            }
+            _context.Entry(entity).State = EntityState.Modified;
+            // _dbset.Update(entity);
+            _context.SaveChanges();
         }
     }
-
 }

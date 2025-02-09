@@ -2,12 +2,13 @@
 
 namespace WebApiUnitTestUdemy.Repositories.Abstract
 {
-    public interface IProductRepositoy
+    public interface IRepository<TEntity> where TEntity : class
     {
-        IEnumerable<Product> GetAll();
-        Product GetById(int id);
-        void Add(Product product);
-        void Update(Product product);
-        void Delete(int id);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int id);
+        Task Create(TEntity entity);
+        void Update(TEntity entity);
+        void Delete(TEntity entity);
+
     }
 }
