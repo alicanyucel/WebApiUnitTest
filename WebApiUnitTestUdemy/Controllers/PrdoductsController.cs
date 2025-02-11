@@ -4,7 +4,7 @@ using WebApiUnitTestUdemy.Repositories.Abstract;
 
 namespace WebApiUnitTestUdemy.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ProductsApiController : ControllerBase
     {
