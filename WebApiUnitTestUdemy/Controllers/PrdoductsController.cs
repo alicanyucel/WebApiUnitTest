@@ -6,11 +6,11 @@ namespace WebApiUnitTestUdemy.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductsApiController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly IRepository<Product> _repository;
 
-        public ProductsApiController(IRepository<Product> repository)
+        public ProductController(IRepository<Product> repository)
         {
             _repository = repository;
         }
