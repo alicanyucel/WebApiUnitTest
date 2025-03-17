@@ -6,9 +6,8 @@ using WebApiUnitTestUdemy.Models;
 using WebApiUnitTestUdemy.Repositories.Abstract;
 using Xunit;
 
-namespace WebApiUnitTestUdemy.Controllers
-{
-    
+namespace WebApiUnitTestUdemy.Controllers;
+
     public class ProductTest
     {
         private readonly Mock<IRepository<Product>> _mockRepo;
@@ -145,5 +144,4 @@ namespace WebApiUnitTestUdemy.Controllers
 
             Assert.IsType<NoContentResult>(noContentResult.Result);
         }
-    }
 }
